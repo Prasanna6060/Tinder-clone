@@ -1,17 +1,27 @@
 import Card from "../models/card.model.js";
 
-export  const createCard = (req, res) => {
- const dbCards = req.body;
- try {
-    const createCard = dbCards.create(dbCards);
-    console.log(createCard);
-    return res.status(201).json({ message: "Created successfully", createCard})
- } catch (error) {
-    return res.status(500).json({error: error.message})
- }
+export const createCard = async(req, res) => {
+  const { name, imgUrl } = req.body;
+  try {
+    const newCard = new Card({
+      name,
+      imgUrl,
+    });
+    const savedCard = await newCard.save();
+    return res.status(201).json({ message: "Created successfully", savedCard });
+  } catch (error) {
+    return res.status(500).json({ error: error.message });
+  }
 };
 
-export const getCards = (req, res) => {
-   const getCards =  Card.find();
-   console.log(getCards);
+export const getCards = async(req, res) => {
+  try{
+    const getCards =   await Card.find();
+  res.status(200).json({message: " Success", getCards})
 }
+  catch(err) {
+    return res.status(500).json({
+        error: err.message
+    })
+  }
+};
