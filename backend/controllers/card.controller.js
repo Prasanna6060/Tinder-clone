@@ -17,7 +17,7 @@ export const createCard = async(req, res) => {
 export const getCards = async(req, res) => {
   try{
     const getCards =   await Card.find();
-  res.status(200).json({message: " Success", getCards})
+  res.status(200).json( getCards )
 }
   catch(err) {
     return res.status(500).json({
